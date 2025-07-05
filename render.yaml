@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: shopify-cod-form
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SHOPIFY_ACCESS_TOKEN
+        value: shpat_XXXXXX
+      - key: SHOPIFY_STORE_DOMAIN
+        value: rt-solutions-test.myshopify.com
