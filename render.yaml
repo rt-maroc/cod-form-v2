@@ -2,10 +2,12 @@ services:
   - type: web
     name: shopify-cod-form
     env: node
+    plan: free
+    rootDir: backend
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server.js
     envVars:
       - key: SHOPIFY_ACCESS_TOKEN
-        value: shpat_XXXXXX
+        sync: false
       - key: SHOPIFY_STORE_DOMAIN
-        value: rt-solutions-test.myshopify.com
+        sync: false
