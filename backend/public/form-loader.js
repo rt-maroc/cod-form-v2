@@ -15,11 +15,16 @@
 
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
-    const nom = form.nom.value;
-    const telephone = form.telephone.value;
+    const nom = form.nom.value.trim();
+    const telephone = form.telephone.value.trim();
 
     const variantId = Shopify?.Analytics?.meta?.page?.variantId ||
                       window.meta?.product?.variants?.[0]?.id;
+
+    if (!variantId) {
+      message.innerText = "Erreur : impossible d’identifier le produit.";
+      return;
+    }
 
     try {
       const res = await fetch("https://shopify-cod-form.onrender.com/create-checkout", {
@@ -29,8 +34,9 @@
       });
 
       const data = await res.json();
-      if (res.ok) {
-        message.innerText = "Commande enregistrée avec succès !";
+
+      if (res.ok && data.redirectUrl) {
+        window.location.href = data.redirectUrl;
       } else {
         message.innerText = "Erreur: " + (data.detail || "Impossible d'enregistrer la commande.");
       }
